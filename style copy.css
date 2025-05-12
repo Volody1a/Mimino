@@ -1,0 +1,387 @@
+/* Общий фон для body */
+body {
+    font-family: "Kanit", sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    color: #333;
+
+    background: #fff;
+    background-image: url(/mimino/image/fon\ body.png);
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    padding: 10px 0; /* Уменьшаем вертикальные отступы */
+    position: relative;
+    z-index: 10; /* Чтобы хедер был поверх фона */
+}
+
+.logo {
+    color: #333;
+
+}
+
+.logo img{
+
+    height: 100px;
+    width: auto;
+    display: block;
+
+}
+
+.name-base {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.header .name-base {
+    font-weight: 700;
+    font-size: 20px; /* Уменьшаем размер логотипа */
+    margin-left: 20px; /* Отступ слева */
+    margin-top: 5px;
+}
+
+.header .menu ul {
+    list-style: none;
+    display: flex;
+    gap: 20px; /* Расстояние между ссылками */
+    margin: 10px;
+    padding: 0;
+    margin-right: 20px; /* Отступ справа */
+}
+
+.header .menu a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 18px; /* Размер текста ссылок */
+    transition: color 0.3s ease; /* Плавное изменение цвета при наведении */
+}
+
+.header .menu a:hover {
+    color: #ff6f61; /* Цвет ссылки при наведении */
+}
+
+/* Бургер-меню */
+.hamburger {
+    display: none;
+    font-size: 24px;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Main Content Container */
+
+
+/* Белый фон для контента внутри main-container */
+.container {
+    background: #b8b8f2;
+    background: linear-gradient(90deg,rgba(184, 184, 242, 1) 0%, rgba(40, 48, 156, 1) 0%, rgba(92, 92, 128, 1) 0%, rgba(168, 178, 224, 1) 0%, rgba(28, 52, 122, 1) 100%);
+    border-radius: 50px;    
+    padding: 20px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    width: 90%;
+    position: relative;
+    z-index: 10; /* Чтобы контент был поверх фона */
+}
+
+.header-container {
+    background: #b8b8f2;
+    background: linear-gradient(90deg,rgba(184, 184, 242, 1) 0%, rgba(40, 48, 156, 1) 0%, rgba(92, 92, 128, 1) 0%, rgba(168, 178, 224, 1) 0%, rgba(28, 52, 122, 1) 100%);    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    padding: 20px;
+    margin: 0 auto;
+    box-shadow: 0 5px 9px rgba(0, 0, 0, 0.9);
+    max-width: 1200px;
+    border-radius: 50px;
+    width: 90%;
+    position: relative;
+    z-index: 10; /* Чтобы контент был поверх фона */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content-container {
+    background: url(/mimino/image/фон.jpg) no-repeat;
+    background-size: cover;
+    background-position: center -500px; /* Сдвигаем изображение вверх на 100px */
+    min-height: 880px; 
+    border-radius: 100px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
+    max-width: 1200px;
+    width: 90%;
+    height: 600px;
+    position: relative;
+    display: flex;
+    align-items: center; /* Выравниваем блок 1 по нижней части */
+    justify-content: flex-start; /* Выравниваем блок 1 по левому краю */
+    z-index: 10; /* Чтобы контент был поверх фона */
+}
+
+.banner-content {
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px; /* Отступы внутри блока */
+
+
+
+}
+
+
+
+
+.service-container {
+    background: #b8b8f2;
+    background: linear-gradient(90deg,rgba(184, 184, 242, 1) 0%, rgba(40, 48, 156, 1) 0%, rgba(92, 92, 128, 1) 0%, rgba(168, 178, 224, 1) 0%, rgba(28, 52, 122, 1) 100%);    
+    border-radius: 50px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    min-height: 600px;
+    width: 90%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 10; /* Чтобы контент был поверх фона */
+}
+
+/* Banner */
+.banner {
+    text-align: center;
+    padding: 50px, 50px;
+}
+
+.banner h1 {
+    font-size: 36px;
+    font-weight: 900;
+    margin: 10px;
+    text-align: left;
+    line-height: 100%;
+    color: #fff; /* Белый текст для контраста */
+}
+
+.banner p {
+    font-size: 20px;
+    margin: 10px;
+    text-align: left;
+    line-height: 100%;
+    margin-bottom: 30px;
+    color: rgb(255, 255, 255); /* Белый текст для контраста */
+}
+
+.banner .btn {
+    transition: transform 0.3s ease;
+    display: inline-block;
+    font-weight: 900;
+    margin-left: 20px;
+    padding: 15px 20px; /* Внутренние отступы */
+    background-color: #cc3a2c;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 15px;
+    font-size: 18px;
+    border: none; /* Убираем границу */
+    cursor: pointer;
+    margin-bottom: 15px; /* Убираем внешние отступы */
+
+}
+
+.btn:hover {
+    transform: translateY(-7px);
+}
+
+.about-text p {
+    font-size: 20px;
+    margin: 10px;
+    text-align: left;
+    line-height: 100%;
+    margin-bottom: 30px;
+    color: rgb(255, 255, 255); /* Белый текст для контраста */
+}
+
+/* Services */
+.services {
+    text-align: center;
+
+}
+
+h2 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+.service-items {
+    display: flex;
+    justify-content: space-around;
+}
+
+.service-item {
+    background: #b8b8f2;
+    background: linear-gradient(90deg, rgba(184, 184, 242, 1) 0%, rgba(40, 48, 156, 1) 0%, rgba(92, 92, 128, 1) 0%, rgba(138, 94, 94, 1) 0%, rgba(71, 29, 29, 1) 50%, rgba(48, 2, 2, 1) 100%);
+    border-radius: 30px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    color: #fff;
+    width: 23%;
+}
+
+.service-item:hover {
+    transform: translateY(-10px);
+}
+
+.service-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.service-item:hover img {
+    transform: scale(1.3); /* Масштабируем изображение */
+}
+
+.service-item h3 {
+    font-size: 24px;
+    margin: 15px 0;
+}
+
+.service-item p {
+    font-size: 16px;
+    padding: 0 10px 20px;
+}
+
+/* Footer */
+.footer {
+    color: #fff;
+    text-align: center;
+    padding: 10px 0; /* Уменьшаем вертикальные отступы */
+    font-size: 14px; /* Уменьшаем размер текста */
+    position: relative;
+    z-index: 10; /* Чтобы футер был поверх фона */
+}
+
+.footer p {
+    margin: 0; /* Убираем отступы у параграфа */
+}
+
+.footer .social-links {
+    margin-top: 10px; /* Добавляем небольшой отступ между текстом и ссылками */
+}
+
+.footer .social-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 8px; /* Уменьшаем расстояние между ссылками */
+    font-size: 14px; /* Уменьшаем размер текста ссылок */
+}
+
+/* Медиа-запросы */
+/* Для больших экранов */
+@media (min-width: 1600px) {
+    body {
+        background-position: center -350px ; /* Сдвигаем фон вверх на 300px */
+    }
+}
+
+@media (min-width: 1500px) and (max-width: 1599px) {
+    body {
+        background-position: center ; /* Сдвигаем фон вверх на 300px */
+    }
+}
+
+@media (min-width: 1400px) and (max-width: 1499px) {
+    body {
+        background-position: center ; /* Сдвигаем фон вверх на 300px */
+    }
+}
+
+@media (min-width: 1300px) and (max-width: 1399px) {
+    body {
+        background-position: center ; /* Сдвигаем фон вверх на 300px */
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1299px) {
+    body {
+        background-position: center ; /* Сдвигаем фон вверх на 300px */
+    }
+}
+
+@media (max-width: 1178px) {
+    .service-items {
+        grid-template-columns: repeat(2, 1fr); /* Две колонки */
+    }
+}
+
+/* Для средних экранов (планшеты) */
+@media (max-width: 1199px) and (min-width: 768px) {
+    body {
+        background-position: center; /* Сдвигаем фон вверх на 150px */
+    }
+    .hamburger {
+        display: block;
+    }
+
+    .menu {
+        display: none;
+        flex-direction: column;
+        background-color: #333;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .menu.active {
+        display: flex;
+    }
+}
+
+/* Для маленьких экранов (телефоны) */
+@media (max-width: 767px) {
+    body {
+        background-position: center top; /* Фон без сдвига */
+    }
+    .hamburger {
+        display: block;
+    }
+
+    .menu {
+        display: none;
+        flex-direction: column;
+        background-color: #333;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .menu.active {
+        display: flex;
+    }
+}
+
