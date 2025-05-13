@@ -10,8 +10,14 @@ body {
     background-image: url(/mimino/image/fon\ body.png);
 }
 
+.body-container {
+    width: 80%;
+    margin: auto;
+}
+
 /* Header */
 .header {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -51,7 +57,7 @@ body {
 .header .menu ul {
     list-style: none;
     display: flex;
-    gap: 20px; /* Расстояние между ссылками */
+    gap: 30px; /* Расстояние между ссылками */
     margin: 10px;
     padding: 0;
     margin-right: 20px; /* Отступ справа */
@@ -90,7 +96,7 @@ body {
     padding: 20px;
     margin: 20px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 1200px;
+    max-width: 87%;
     width: 90%;
     position: relative;
     z-index: 10; /* Чтобы контент был поверх фона */
@@ -103,7 +109,7 @@ body {
     padding: 20px;
     margin: 0 auto;
     box-shadow: 0 5px 9px rgba(0, 0, 0, 0.9);
-    max-width: 1200px;
+    max-width: 87%;
     border-radius: 50px;
     width: 90%;
     position: relative;
@@ -121,7 +127,7 @@ body {
     border-radius: 100px;
     margin: 0 auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9);
-    max-width: 1200px;
+    max-width: 90%;
     width: 90%;
     height: 600px;
     position: relative;
@@ -151,7 +157,7 @@ body {
     border-radius: 50px;
     margin: 0 auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 1200px;
+    max-width: 90%;
     min-height: 600px;
     width: 90%;
     position: relative;
@@ -163,6 +169,7 @@ body {
 
 /* Banner */
 .banner {
+    
     text-align: center;
     padding: 50px, 50px;
 }
@@ -382,6 +389,257 @@ h2 {
     background: rgba(0,0,0,0.8);
     transform: scale(1.1);}
 
+    /* Стили для блока контактов */
+
+.contacts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.contacts-info {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.contact-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contact-card h3 {
+    color: #1c347a;
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.contact-item .icon {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.contact-item a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.contact-item a:hover {
+    color: #1c347a;
+}
+
+.map-placeholder {
+    position: relative;
+    height: 250px;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.map-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.map-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    transition: transform 0.3s;
+}
+
+.social-link .icon {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.social-link .icon img {
+    width: 30px;
+    display: flex;
+}
+
+.social-link.whatsapp {
+    background: #25D366;
+}
+
+.social-link.telegram {
+    background: #0088cc;
+}
+
+.social-link.instagram {
+    background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+}
+
+.social-link:hover {
+    transform: translateY(-3px);
+}
+
+/* Стили для уведомлений */
+#formAlerts {
+    margin-bottom: 20px;
+}
+
+.alert {
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    animation: fadeIn 0.3s;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Стили для кнопки */
+.btn {
+    position: relative;
+}
+
+.btn-text, .btn-spinner {
+    transition: opacity 0.3s;
+}
+
+.btn-spinner {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Стили формы бронирования */
+.booking-form {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.booking-form h3 {
+    color: #1c347a;
+    margin: 0 0 25px 0;
+    font-size: 24px;
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+    font-size: 15px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+    background: white;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #1c347a;
+    outline: none;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.form-row .form-group {
+    flex: 1;
+    min-width: 0; /* Важно: предотвращает "расползание" */
+}
+/* Стили для календаря */
+.flatpickr-input {
+    background: white !important;
+    cursor: pointer;
+}
+
+.booking-form .btn {
+    width: 100%;
+    padding: 15px;
+    background: #1c347a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.5s;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.booking-form .btn:hover {
+    transform: translateY(-5px);
+}
+
+
+
 /* Footer */
 .footer {
     color: #fff;
@@ -396,11 +654,11 @@ h2 {
     margin: 0; /* Убираем отступы у параграфа */
 }
 
-.footer .social-links {
+.footer .footer-social-links {
     margin-top: 10px; /* Добавляем небольшой отступ между текстом и ссылками */
 }
 
-.footer .social-links a {
+.footer .footer-social-links a {
     color: #fff;
     text-decoration: none;
     margin: 0 8px; /* Уменьшаем расстояние между ссылками */
@@ -409,47 +667,83 @@ h2 {
 
 /* Медиа-запросы */
 /* Для больших экранов */
-@media (min-width: 1600px) {
-    body {
-        background-position: center -350px ; /* Сдвигаем фон вверх на 300px */
-    }
-}
+@media (min-width: 2000px) {
+    .content-container {
+        background: url(/mimino/image/фон.jpg) no-repeat;
+        background-size: cover;
+        background-position: center -700px;    
+    
+}}
 
-@media (min-width: 1500px) and (max-width: 1599px) {
-    body {
-        background-position: center ; /* Сдвигаем фон вверх на 300px */
-    }
-}
+@media (min-width: 1900px) and (max-width: 1999px) {
+    .content-container {
+        background: url(/mimino/image/фон.jpg) no-repeat;
+        background-size: cover;
+        background-position: center -650px;    
+    
+}}
+
+@media (min-width: 1800px) and (max-width: 1899px) {
+    .content-container {
+        background: url(/mimino/image/фон.jpg) no-repeat;
+        background-size: cover;
+        background-position: center -550px;    
+    
+}}
+
+@media (min-width: 1700px) and (max-width: 1799px) {
+    .content-container {
+        background: url(/mimino/image/фон.jpg) no-repeat;
+        background-size: cover;
+        background-position: center -500px;    
+    
+}}
+
+@media (min-width: 1500px) and (max-width: 1699px) {
+    .content-container {
+        background: url(/mimino/image/фон.jpg) no-repeat;
+        background-size: cover;
+        background-position: center -450px;    
+    
+}}
+
 
 @media (min-width: 1400px) and (max-width: 1499px) {
-    body {
-        background-position: center ; /* Сдвигаем фон вверх на 300px */
-    }
+    .content-container {
+        background: url(/mimino/image/фон.jpg) no-repeat;
+        background-size: cover;
+        background-position: center -280px;    
+    
+}
 }
 
 @media (min-width: 1300px) and (max-width: 1399px) {
-    body {
-        background-position: center ; /* Сдвигаем фон вверх на 300px */
-    }
+    .content-container {
+        background: url(/mimino/image/фон.jpg) no-repeat;
+        background-size: cover;
+        background-position: center -200px;    
+    
+}
 }
 
 @media (min-width: 1200px) and (max-width: 1299px) {
-    body {
-        background-position: center ; /* Сдвигаем фон вверх на 300px */
-    }
+    .content-container {
+        background: url(/mimino/image/фон.jpg) no-repeat;
+        background-size: cover;
+        background-position: center -100px;    
+    
+}
 }
 
-@media (max-width: 1178px) {
-    .service-items {
-        grid-template-columns: repeat(2, 1fr); /* Две колонки */
-    }
-}
 
 /* Для средних экранов (планшеты) */
 @media (max-width: 1199px) and (min-width: 768px) {
-    body {
-        background-position: center; /* Сдвигаем фон вверх на 150px */
-    }
+    .content-container {
+        background: url(/mimino/image/фон.jpg) no-repeat;
+        background-size: cover;
+        background-position: center;    
+    
+}
     .hamburger {
         display: block;
     }
@@ -468,7 +762,18 @@ h2 {
     .menu.active {
         display: flex;
     }
+
+    .form-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .booking-form {
+        padding: 20px;
+    }
 }
+
+
 
 /* Для маленьких экранов (телефоны) */
 @media (max-width: 767px) {
@@ -498,4 +803,10 @@ h2 {
         padding: 15px;
 }
 
+}
+
+@media (max-width: 1178px) {
+    .service-items {
+        grid-template-columns: repeat(2, 1fr); /* Две колонки */
+    }
 }

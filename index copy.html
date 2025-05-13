@@ -8,9 +8,15 @@
         @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Mea+Culpa&display=swap');
     </style>
     <link rel="stylesheet" href="style copy.css">
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Flatpickr JS + Russian locale -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
     <script src="/mimino/index.js" defer></script>
 </head>
 <body>
+    <div class="body-container">
     <!-- Header -->
     <header class="header">
         <div class="header-container">
@@ -20,11 +26,11 @@
             <button class="hamburger">&#9776;</button>
             <nav class="menu">
                 <ul>
-                    <li><a href="index.html">Главная</a></li>
-                    <li><a href="about.html">О нас</a></li>
-                    <li><a href="services.html">Услуги</a></li>
+                    <li><a href="index copy.html">Главная</a></li>
+                    <li><a href="#about-h2">О нас</a></li>
+                    <li><a href="#services-h2">Услуги</a></li>
                     <li><a href="gallery.html">Галерея</a></li>
-                    <li><a href="contacts.html">Контакты</a></li>
+                    <li><a href="#contacts-h2">Контакты</a></li>
                 </ul>
             </nav>
         </div>
@@ -47,7 +53,7 @@
 
     <section id="about" class="about">
         <div class="container">
-            <h2>О нас</h2>
+            <h2 id="about-h2">О нас</h2>
             <div class="about-content">
                 <div class="about-text">
                     <p>
@@ -70,7 +76,7 @@
     <!-- Services -->
     <section id="services" class="services">
         <div class="service-container">
-            <h2>Наши услуги</h2>
+            <h2 id="services-h2">Наши услуги</h2>
             <div class="service-items">
                 <div class="service-item" data-modal="modal1">
                         <img src="/mimino/image/баня.jpg" alt="Баня">
@@ -170,18 +176,110 @@
         </div>
     </div>
 </section>
+
+<section id="contacts" class="contacts-section">
+    <div class="container">
+        <h2 id="contacts-h2">Контакты</h2>
+        
+        <div class="contacts-grid">
+            <!-- Контактная информация -->
+            <div class="contacts-info">
+                <div class="contact-card">
+                    <h3>Адрес</h3>
+                    <p>Карачаево-Черкесия, Архыз, Банковская ул., 57</p>
+                    <div class="map-placeholder">
+                        <img src="/mimino/image/map-placeholder.jpg" alt="Карта">
+                        <div class="map-overlay"><iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A4a52237fc3ae84cd3983d1c9d2c1c9f904e370fbe2f5707aade7f40e2cf15f4f&amp;source=constructor" width="567" height="335" frameborder="0"></iframe></div>
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <h3>Свяжитесь с нами</h3>
+                    <div class="contact-item">
+                        <i class="icon">📱</i>
+                        <a href="tel:+79281234567">+7 (928) 123-45-67</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="icon">✉️</i>
+                        <a href="mailto:arkhyz@example.com">arkhyz@example.com</a>
+                    </div>
+                </div>
+                
+                <div class="contact-card">
+                    <h3>Социальные сети</h3>
+                    <div class="social-links">
+                        <a href="https://wa.me/79281234567" class="social-link whatsapp">
+                            <i class="icon"><img src="/mimino/image/watsap.svg" alt=""></i> WhatsApp
+                        </a>
+                        <a href="https://t.me/arkhyz_base" class="social-link telegram">
+                            <i class="icon"><img src="/mimino/image/telegram.svg" alt=""></i> Telegram
+                        </a>
+                        <a href="https://instagram.com/arkhyz_base" class="social-link instagram">
+                            <i class="icon"><img src="/mimino/image/instagram.svg" alt=""></i> Instagram
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Форма бронирования -->
+            <div class="booking-form">
+                <div id="formAlerts"></div> <!-- Контейнер для уведомлений -->
+                <h3>Забронировать домик</h3>
+                <form id="bookingForm">
+                    <div class="form-group">
+                        <label for="name">Ваше имя:</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Телефон:</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="checkin">Заезд:</label>
+                            <input type="text" id="checkin" class="date-input" placeholder="Выберите дату" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="checkout">Выезд:</label>
+                            <input type="text" id="checkout" class="date-input" placeholder="Выберите дату" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="house">Домик:</label>
+                        <select id="house" required>
+                            <option value="">Выберите вариант</option>
+                            <option value="house1">Домик на 2 человек</option>
+                            <option value="house2">Домик на 4 человек</option>
+                            <option value="house3">VIP-домик</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn">
+                        <span class="btn-text">Отправить заявку</span>
+                        <span class="btn-spinner" style="display:none;">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </span>
+                    </button>                </form>
+            </div>
+        </div>
+    </div>
+</section>
   
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <p>&copy; 2025 База отдыха "Мимино". Все права защищены.</p>
-            <div class="social-links">
+            <div class="footer-social-links">
                 <a href="#">Telegram</a>
                 <a href="#">Instagram</a>
                 <a href="#">WhatsApp</a>
             </div>
         </div>
     </footer>
-    
+</div>
 </body>
 </html>
