@@ -7,7 +7,7 @@ body {
     color: #333;
 
     background: #fff;
-    background-image: url(/mimino/image/fon\ body.png);
+    background-image: url(image/fon\ body.png);
 }
 
 .body-container {
@@ -120,7 +120,7 @@ body {
 }
 
 .content-container {
-    background: url(/mimino/image/фон.jpg) no-repeat;
+    background: url(image/фон.jpg) no-repeat;
     background-size: cover;
     background-position: center -500px; /* Сдвигаем изображение вверх на 100px */
     min-height: 880px; 
@@ -669,7 +669,7 @@ h2 {
 /* Для больших экранов */
 @media (min-width: 2000px) {
     .content-container {
-        background: url(/mimino/image/фон.jpg) no-repeat;
+        background: url(image/фон.jpg) no-repeat;
         background-size: cover;
         background-position: center -700px;    
     
@@ -677,7 +677,7 @@ h2 {
 
 @media (min-width: 1900px) and (max-width: 1999px) {
     .content-container {
-        background: url(/mimino/image/фон.jpg) no-repeat;
+        background: url(image/фон.jpg) no-repeat;
         background-size: cover;
         background-position: center -650px;    
     
@@ -685,7 +685,7 @@ h2 {
 
 @media (min-width: 1800px) and (max-width: 1899px) {
     .content-container {
-        background: url(/mimino/image/фон.jpg) no-repeat;
+        background: url(image/фон.jpg) no-repeat;
         background-size: cover;
         background-position: center -550px;    
     
@@ -693,7 +693,7 @@ h2 {
 
 @media (min-width: 1700px) and (max-width: 1799px) {
     .content-container {
-        background: url(/mimino/image/фон.jpg) no-repeat;
+        background: url(image/фон.jpg) no-repeat;
         background-size: cover;
         background-position: center -500px;    
     
@@ -701,7 +701,7 @@ h2 {
 
 @media (min-width: 1500px) and (max-width: 1699px) {
     .content-container {
-        background: url(/mimino/image/фон.jpg) no-repeat;
+        background: url(image/фон.jpg) no-repeat;
         background-size: cover;
         background-position: center -450px;    
     
@@ -710,7 +710,7 @@ h2 {
 
 @media (min-width: 1400px) and (max-width: 1499px) {
     .content-container {
-        background: url(/mimino/image/фон.jpg) no-repeat;
+        background: url(image/фон.jpg) no-repeat;
         background-size: cover;
         background-position: center -280px;    
     
@@ -719,7 +719,7 @@ h2 {
 
 @media (min-width: 1300px) and (max-width: 1399px) {
     .content-container {
-        background: url(/mimino/image/фон.jpg) no-repeat;
+        background: url(image/фон.jpg) no-repeat;
         background-size: cover;
         background-position: center -200px;    
     
@@ -728,7 +728,7 @@ h2 {
 
 @media (min-width: 1200px) and (max-width: 1299px) {
     .content-container {
-        background: url(/mimino/image/фон.jpg) no-repeat;
+        background: url(image/фон.jpg) no-repeat;
         background-size: cover;
         background-position: center -100px;    
     
@@ -739,7 +739,7 @@ h2 {
 /* Для средних экранов (планшеты) */
 @media (max-width: 1199px) and (min-width: 768px) {
     .content-container {
-        background: url(/mimino/image/фон.jpg) no-repeat;
+        background: url(image/фон.jpg) no-repeat;
         background-size: cover;
         background-position: center;    
     
