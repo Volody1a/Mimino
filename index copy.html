@@ -41,6 +41,7 @@
                     Расположение в окружении горных пейзажей делает нашу базу идеальным выбором для тех, кто ценит природу и комфорт.</p>
                 <a href="#booking" class="btn">Забронировать</a>
             </div>
+            
         </div>
     </section>
 
@@ -71,31 +72,105 @@
         <div class="service-container">
             <h2>Наши услуги</h2>
             <div class="service-items">
-                <div class="service-item">
+                <div class="service-item" data-modal="modal1">
                         <img src="/mimino/image/баня.jpg" alt="Баня">
                         <h3>Баня</h3>
                         <p>Русская баня с березовыми вениками.</p>
                 </div>
-                <div class="service-item">
+                <div class="service-item" data-modal="modal2">
                     <img src="/mimino/image/купель.jpg" alt="Купель">
                     <h3>Купель</h3>
                     <p>Деревянная купель с холодной водой.</p>
                 </div>
-                <div class="service-item">
+                <div class="service-item" data-modal="modal3">
                     <img src="/mimino/image/домики.jpg" alt="Домики">
                     <h3>Домики</h3>
                     <p>Уютные домики с видом на горы.</p>
                 </div>
-                <div class="service-item">
+                <div class="service-item" data-modal="modal4">
                     <img src="/mimino/image/мангал.jpg" alt="Мангальные зоны">
                     <h3>Мангальные зоны</h3>
                     <p>Оборудованные места для барбекю.</p>
                 </div>
-            </div>
-        </div>
-    </section>
-</div>
+                 <!-- Модальные окна -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
 
+            <div class="slider">
+                    <div class="slider-track">
+                        <img src="image/баня.jpg" alt="Баня 1" class="slide">
+                        <img src="image/баня2.jpg" alt="Баня 2" class="slide">
+                        <img src="image/баня3.jpg" alt="Баня 3" class="slide">
+                    </div>
+                    <div class="slider-controls">
+                        <button class="prev">&#10094;</button>
+                        <button class="next">&#10095;</button>
+                    </div>
+            </div>
+                <p>Наша русская баня — это идеальное место для отдыха после прогулки по горам. 
+                Мы предлагаем березовые веники, ароматные травы и комфортную температуру.</p>
+        </div>
+    </div>
+
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="slider">
+                <div class="slider-track">
+                    <img src="image/баня.jpg" alt="Баня 1" class="slide">
+                    <img src="image/баня2.jpg" alt="Баня 2" class="slide">
+                    <img src="image/баня3.jpg" alt="Баня 3" class="slide">
+                </div>
+                <div class="slider-controls">
+                    <button class="prev">&#10094;</button>
+                    <button class="next">&#10095;</button>
+                </div>
+        </div>
+            <p>Деревянная купель с холодной водой поможет освежиться после бани. 
+               Это отличный способ восстановить силы и насладиться природой.</p>
+        </div>
+    </div>
+
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="slider">
+                <div class="slider-track">
+                    <img src="image/баня.jpg" alt="Баня 1" class="slide">
+                    <img src="image/баня2.jpg" alt="Баня 2" class="slide">
+                    <img src="image/баня3.jpg" alt="Баня 3" class="slide">
+                </div>
+                <div class="slider-controls">
+                    <button class="prev">&#10094;</button>
+                    <button class="next">&#10095;</button>
+                </div>
+        </div>
+            <p>Наши уютные домики оборудованы всем необходимым: кроватями, отоплением, 
+               душем и видом на горы. Идеально для семейного отдыха.</p>
+        </div>
+    </div>
+
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="slider">
+                <div class="slider-track">
+                    <img src="image/баня.jpg" alt="Баня 1" class="slide">
+                    <img src="image/баня2.jpg" alt="Баня 2" class="slide">
+                    <img src="image/баня3.jpg" alt="Баня 3" class="slide">
+                </div>
+                <div class="slider-controls">
+                    <button class="prev">&#10094;</button>
+                    <button class="next">&#10095;</button>
+                </div>
+        </div>
+            <p>Оборудованные мангальные зоны позволят вам приготовить вкусный шашлык или барбекю 
+               прямо на свежем воздухе. Все необходимое уже включено.</p>
+        </div>
+    </div>
+</section>
+  
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
