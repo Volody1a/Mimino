@@ -1,14 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
     // ==================== Бургер-меню ====================
-    const hamburger = document.querySelector('.hamburger');
-    const menu = document.querySelector('.menu');
-    
-    if (hamburger && menu) {
-        hamburger.addEventListener('click', function() {
-            this.classList.toggle('active');
-            menu.classList.toggle('active');
-        });
-    }
+// Адаптация меню
+const hamburger = document.querySelector('.hamburger');
+const menu = document.querySelector('.menu');
+
+if (hamburger && menu) {
+  hamburger.addEventListener('click', function() {
+    this.classList.toggle('active');
+    menu.classList.toggle('active');
+  });
+  
+  // Закрытие меню при клике на ссылку
+  document.querySelectorAll('.menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      menu.classList.remove('active');
+    });
+  });
+}
+        
 
     // ==================== Модальные окна ====================
     const serviceItems = document.querySelectorAll('.service-item');
@@ -86,14 +96,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Обновляем ширину при ресайзе окна
-        window.addEventListener('resize', function() {
+         // Обновление при ресайзе
+        window.addEventListener('resize', () => {
             slideWidth = slider.offsetWidth;
-            slides.forEach(slide => {
-                slide.style.width = `${slideWidth}px`;
-            });
-            updateSliderPosition();
+            updateSlider();
         });
         
+        // Для тач-устройств
+        if ('ontouchstart' in window) {
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            slider.addEventListener('touchstart', e => {
+            touchStartX = e.touches[0].clientX;
+            }, {passive: true});
+            
+            slider.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].clientX;
+            handleSwipe();
+            }, {passive: true});
+            
+            function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextBtn.click();
+            if (touchEndX > touchStartX + 50) prevBtn.click();
+            }
+        }
+                
         // Функция обновления позиции слайдера
         function updateSliderPosition() {
             track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
@@ -335,3 +363,4 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+

@@ -1,4 +1,24 @@
 /* Общий фон для body */
+
+:root {
+    --mobile-padding: 15px;
+    --tablet-padding: 25px;
+  }
+  
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  html {
+    font-size: 14px;
+  }
+  
+  @media (min-width: 768px) {
+    html {
+      font-size: 16px;
+    }
+  }
+
 body {
     font-family: "Kanit", sans-serif;
     line-height: 1.6;
@@ -27,32 +47,29 @@ body {
     z-index: 10; /* Чтобы хедер был поверх фона */
 }
 
-.logo {
-    color: #333;
-
+.header-container {
+    background: #b8b8f2;
+    background: linear-gradient(90deg,rgba(184, 184, 242, 1) 0%, rgba(40, 48, 156, 1) 0%, rgba(92, 92, 128, 1) 0%, rgba(168, 178, 224, 1) 0%, rgba(28, 52, 122, 1) 100%);    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    padding: 20px;
+    margin: 0 auto;
+    box-shadow: 0 5px 9px rgba(0, 0, 0, 0.9);
+    max-width: 87%;
+    border-radius: 50px;
+    width: 90%;
+    position: relative;
+    z-index: 10; /* Чтобы контент был поверх фона */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
 
 .logo img{
-
     height: 100px;
     width: auto;
-    display: block;
-
 }
 
-.name-base {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-
-.header .name-base {
-    font-weight: 700;
-    font-size: 20px; /* Уменьшаем размер логотипа */
-    margin-left: 20px; /* Отступ слева */
-    margin-top: 5px;
-}
 
 .header .menu ul {
     list-style: none;
@@ -102,22 +119,6 @@ body {
     z-index: 10; /* Чтобы контент был поверх фона */
 }
 
-.header-container {
-    background: #b8b8f2;
-    background: linear-gradient(90deg,rgba(184, 184, 242, 1) 0%, rgba(40, 48, 156, 1) 0%, rgba(92, 92, 128, 1) 0%, rgba(168, 178, 224, 1) 0%, rgba(28, 52, 122, 1) 100%);    border-radius: 10px;
-    color: rgb(255, 255, 255);
-    padding: 20px;
-    margin: 0 auto;
-    box-shadow: 0 5px 9px rgba(0, 0, 0, 0.9);
-    max-width: 87%;
-    border-radius: 50px;
-    width: 90%;
-    position: relative;
-    z-index: 10; /* Чтобы контент был поверх фона */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
 
 .content-container {
     background: url(image/фон.jpg) no-repeat;
@@ -206,7 +207,6 @@ body {
     border: none; /* Убираем границу */
     cursor: pointer;
     margin-bottom: 15px; /* Убираем внешние отступы */
-
 }
 
 .btn:hover {
@@ -744,6 +744,20 @@ h2 {
         background-position: center;    
     
 }
+
+    .body-container {
+    width: 95%;
+  }
+  
+  .service-items {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .service-item {
+    width: 45%;
+    margin: 10px 2.5%;
+  }
     .hamburger {
         display: block;
     }
@@ -780,33 +794,92 @@ h2 {
     body {
         background-position: center top; /* Фон без сдвига */
     }
+
+    .header-container {
+        padding: 10px 15px;
+        max-width: 100%;
+        border-radius: 50px;
+    }
+
+    .logo img {
+        height: 60px;
+    }
+      
+
     .hamburger {
         display: block;
     }
 
     .menu {
-        display: none;
-        flex-direction: column;
-        background-color: #333;
-        position: absolute;
-        top: 60px;
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        height: 100vh;
+        background: #1c347a;
+        transition: 0.4s;
+        padding-top: 80px;
+    }
+    .menu.active {
         left: 0;
-        width: 100%;
-        padding: 10px;
+    }
+      
+      .menu ul {
+        flex-direction: column;
+        gap: 15px;
     }
 
-    .menu.active {
-        display: flex;
+    .content-container {
+        background-position: center ;
+        height: auto;
+        min-height: 400px;
+        border-radius: 20px;
+        margin: 10px auto;
+      }
+      
+      .banner-content {
+        width: 100%;
+        padding: 20px;
+      }
+      
+      .banner h1 {
+        font-size: 20px;
+      }
+
+      .banner p {
+        font-size: 14px;
+      }
+
+      .banner .btn {
+        font-size: 12px;
     }
+      
+      /* Услуги */
+  .service-items {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .service-item {
+    width: 45%;
+    margin: 10px 2.5%;
+  }
+  
     .modal-content {
         width: 90%;
         padding: 15px;
 }
 
+  /* Контакты */
+  .contacts-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Форма */
+  .form-row {
+    flex-direction: column;
+  }
 }
 
-@media (max-width: 1178px) {
-    .service-items {
-        grid-template-columns: repeat(2, 1fr); /* Две колонки */
-    }
-}
+
+
