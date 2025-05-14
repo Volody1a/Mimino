@@ -1,24 +1,33 @@
 document.addEventListener('DOMContentLoaded', function() {
     // ==================== Бургер-меню ====================
-// Адаптация меню
-const hamburger = document.querySelector('.hamburger');
-const menu = document.querySelector('.menu');
+    const hamburger = document.querySelector('.hamburger');
+    const menu = document.querySelector('.menu');
 
-if (hamburger && menu) {
-  hamburger.addEventListener('click', function() {
-    this.classList.toggle('active');
-    menu.classList.toggle('active');
-  });
-  
-  // Закрытие меню при клике на ссылку
-  document.querySelectorAll('.menu a').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('active');
-      menu.classList.remove('active');
-    });
-  });
-}
-        
+    if (hamburger && menu) {
+        // Клик по бургеру
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation(); // Предотвращаем всплытие
+            this.classList.toggle('active');
+            menu.classList.toggle('active');
+        });
+
+        // Закрытие меню при клике на ссылку
+        document.querySelectorAll('.menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.stopPropagation();
+                hamburger.classList.remove('active');
+                menu.classList.remove('active');
+            });
+        });
+
+        // Закрытие меню при клике вне его
+        document.addEventListener('click', function(e) {
+            if (!menu.contains(e.target)) {
+                hamburger.classList.remove('active');
+                menu.classList.remove('active');
+            }
+        });
+    }
 
     // ==================== Модальные окна ====================
     const serviceItems = document.querySelectorAll('.service-item');
@@ -30,7 +39,8 @@ if (hamburger && menu) {
         const modal = document.getElementById(modalId);
         if (modal) {
             modal.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Блокируем скролл страницы
+            document.body.style.overflow = 'hidden';
+            document.body.style.touchAction = 'none'; // Блокируем масштабирование
             
             // Анимация появления
             const modalContent = modal.querySelector('.modal-content');
@@ -38,7 +48,7 @@ if (hamburger && menu) {
                 modalContent.classList.add('active');
             }, 10);
             
-            // Инициализация слайдера при открытии
+            // Инициализация слайдера
             const slider = modal.querySelector('.slider');
             if (slider) initSlider(slider);
         }
@@ -51,7 +61,8 @@ if (hamburger && menu) {
         
         setTimeout(() => {
             modal.style.display = 'none';
-            document.body.style.overflow = ''; // Восстанавливаем скролл
+            document.body.style.overflow = '';
+            document.body.style.touchAction = ''; // Восстанавливаем масштабирование
         }, 300);
     }
 
@@ -64,7 +75,8 @@ if (hamburger && menu) {
     });
 
     closeButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
             const modal = this.closest('.modal');
             closeModal(modal);
         });
@@ -89,77 +101,102 @@ if (hamburger && menu) {
         
         let currentIndex = 0;
         let slideWidth = slider.offsetWidth;
+        let isDragging = false;
+        let startPosX = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
         
         // Устанавливаем ширину слайдов
-        slides.forEach(slide => {
+        slides.forEach((slide, index) => {
             slide.style.width = `${slideWidth}px`;
+            
+            // Для тач-устройств
+            slide.addEventListener('touchstart', touchStart(index));
+            slide.addEventListener('touchend', touchEnd);
+            slide.addEventListener('touchmove', touchMove);
         });
         
-        // Обновляем ширину при ресайзе окна
-         // Обновление при ресайзе
+        // Ресайз
         window.addEventListener('resize', () => {
             slideWidth = slider.offsetWidth;
-            updateSlider();
+            slides.forEach(slide => {
+                slide.style.width = `${slideWidth}px`;
+            });
+            updateSliderPosition();
         });
         
-        // Для тач-устройств
-        if ('ontouchstart' in window) {
-            let touchStartX = 0;
-            let touchEndX = 0;
-            
-            slider.addEventListener('touchstart', e => {
-            touchStartX = e.touches[0].clientX;
-            }, {passive: true});
-            
-            slider.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].clientX;
-            handleSwipe();
-            }, {passive: true});
-            
-            function handleSwipe() {
-            if (touchEndX < touchStartX - 50) nextBtn.click();
-            if (touchEndX > touchStartX + 50) prevBtn.click();
-            }
-        }
-                
-        // Функция обновления позиции слайдера
+        // Кнопки навигации
+        nextBtn.addEventListener('click', goNext);
+        prevBtn.addEventListener('click', goPrev);
+        
+        // Функции
         function updateSliderPosition() {
             track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
         }
         
-        // Кнопка "Вперед"
-        nextBtn.addEventListener('click', function() {
+        function goNext() {
             if (currentIndex < slides.length - 1) {
                 currentIndex++;
             } else {
-                currentIndex = 0; // Возврат к первому слайду
+                currentIndex = 0;
             }
             updateSliderPosition();
-        });
+        }
         
-        // Кнопка "Назад"
-        prevBtn.addEventListener('click', function() {
+        function goPrev() {
             if (currentIndex > 0) {
                 currentIndex--;
             } else {
-                currentIndex = slides.length - 1; // Переход к последнему слайду
+                currentIndex = slides.length - 1;
             }
             updateSliderPosition();
-        });
+        }
+        
+        // Touch-функции
+        function touchStart(index) {
+            return function(e) {
+                currentIndex = index;
+                startPosX = e.touches[0].clientX;
+                isDragging = true;
+                track.style.transition = 'none';
+            };
+        }
+        
+        function touchEnd() {
+            isDragging = false;
+            track.style.transition = 'transform 0.5s ease';
+            
+            const movedBy = currentTranslate - prevTranslate;
+            if (movedBy < -50 && currentIndex < slides.length - 1) {
+                currentIndex++;
+            } else if (movedBy > 50 && currentIndex > 0) {
+                currentIndex--;
+            }
+            
+            updateSliderPosition();
+        }
+        
+        function touchMove(e) {
+            if (isDragging) {
+                const currentPosition = e.touches[0].clientX;
+                currentTranslate = prevTranslate + currentPosition - startPosX;
+                track.style.transform = `translateX(${currentTranslate}px)`;
+            }
+        }
         
         // Инициализация
         updateSliderPosition();
     }
     
-    // Автоматическая инициализация всех слайдеров на странице
+    // Инициализация всех слайдеров
     const sliders = document.querySelectorAll('.slider');
     sliders.forEach(slider => {
         initSlider(slider);
     });
 });
 
-// Инициализация календаря
-// Инициализация календаря
+// Остальной код (календарь, форма бронирования) остается без изменений
+
 document.addEventListener('DOMContentLoaded', function() {
     // Конфигурация (замените на свои данные)
     const config = {

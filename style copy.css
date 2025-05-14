@@ -7,7 +7,16 @@
   
   * {
     -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+
   }
+  /* Для модальных окон */
+.modal {
+    touch-action: pan-y; /* Разрешаем только вертикальный скролл */
+}
+.slider-track {
+    user-select: none;
+}
   
   html {
     font-size: 14px;
@@ -763,14 +772,23 @@ h2 {
     }
 
     .menu {
-        display: none;
-        flex-direction: column;
-        background-color: #333;
-        position: absolute;
-        top: 60px;
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 20%;
+        height: 50%;
+        background: #1c347a;
+        transition: 0.4s;
+        padding-top: 80px;
+        border-radius: 50px;
+    }
+    .menu.active {
         left: 0;
-        width: 100%;
-        padding: 10px;
+    }
+      
+      .menu ul {
+        flex-direction: column;
+        gap: 15px;
     }
 
     .menu.active {
