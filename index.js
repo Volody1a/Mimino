@@ -4,23 +4,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const menu = document.querySelector('.menu');
 
     if (hamburger && menu) {
-        // Клик по бургеру
         hamburger.addEventListener('click', function(e) {
-            e.stopPropagation(); // Предотвращаем всплытие
+            e.preventDefault();
+            e.stopPropagation();
             this.classList.toggle('active');
             menu.classList.toggle('active');
         });
 
-        // Закрытие меню при клике на ссылку
+        // Закрытие при клике на ссылку
         document.querySelectorAll('.menu a').forEach(link => {
             link.addEventListener('click', function(e) {
-                e.stopPropagation();
                 hamburger.classList.remove('active');
                 menu.classList.remove('active');
             });
         });
 
-        // Закрытие меню при клике вне его
+        // Закрытие при клике вне меню
         document.addEventListener('click', function(e) {
             if (!menu.contains(e.target)) {
                 hamburger.classList.remove('active');
@@ -40,9 +39,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (modal) {
             modal.style.display = 'block';
             document.body.style.overflow = 'hidden';
-            document.body.style.touchAction = 'none'; // Блокируем масштабирование
             
-            // Анимация появления
+            // Анимация
             const modalContent = modal.querySelector('.modal-content');
             setTimeout(() => {
                 modalContent.classList.add('active');
@@ -54,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Функция закрытия модального окна
+    // Функция закрытия
     function closeModal(modal) {
         const modalContent = modal.querySelector('.modal-content');
         modalContent.classList.remove('active');
@@ -62,18 +60,36 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             modal.style.display = 'none';
             document.body.style.overflow = '';
-            document.body.style.touchAction = ''; // Восстанавливаем масштабирование
         }, 300);
     }
 
-    // Обработчики для модальных окон
+    // Обработчики для карточек услуг
     serviceItems.forEach(item => {
+        // Для touch-устройств
+        item.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            this.classList.add('touched');
+        });
+        
+        item.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('touched')) {
+                const modalId = this.getAttribute('data-modal');
+                openModal(modalId);
+                this.classList.remove('touched');
+            }
+        });
+        
+        // Для десктопов
         item.addEventListener('click', function() {
-            const modalId = this.getAttribute('data-modal');
-            openModal(modalId);
+            if (!('ontouchstart' in window)) {
+                const modalId = this.getAttribute('data-modal');
+                openModal(modalId);
+            }
         });
     });
 
+    // Закрытие модальных окон
     closeButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -101,19 +117,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         let currentIndex = 0;
         let slideWidth = slider.offsetWidth;
+        let startPos = 0;
+        let currentPos = 0;
         let isDragging = false;
-        let startPosX = 0;
-        let currentTranslate = 0;
-        let prevTranslate = 0;
         
-        // Устанавливаем ширину слайдов
-        slides.forEach((slide, index) => {
+        // Установка ширины слайдов
+        slides.forEach(slide => {
             slide.style.width = `${slideWidth}px`;
-            
-            // Для тач-устройств
-            slide.addEventListener('touchstart', touchStart(index));
-            slide.addEventListener('touchend', touchEnd);
-            slide.addEventListener('touchmove', touchMove);
         });
         
         // Ресайз
@@ -125,15 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateSliderPosition();
         });
         
-        // Кнопки навигации
-        nextBtn.addEventListener('click', goNext);
-        prevBtn.addEventListener('click', goPrev);
-        
-        // Функции
-        function updateSliderPosition() {
-            track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
-        }
-        
+        // Навигация
         function goNext() {
             if (currentIndex < slides.length - 1) {
                 currentIndex++;
@@ -152,49 +154,61 @@ document.addEventListener('DOMContentLoaded', function() {
             updateSliderPosition();
         }
         
-        // Touch-функции
-        function touchStart(index) {
-            return function(e) {
-                currentIndex = index;
-                startPosX = e.touches[0].clientX;
-                isDragging = true;
-                track.style.transition = 'none';
-            };
+        function updateSliderPosition() {
+            track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
         }
         
-        function touchEnd() {
-            isDragging = false;
-            track.style.transition = 'transform 0.5s ease';
-            
-            const movedBy = currentTranslate - prevTranslate;
-            if (movedBy < -50 && currentIndex < slides.length - 1) {
-                currentIndex++;
-            } else if (movedBy > 50 && currentIndex > 0) {
-                currentIndex--;
-            }
-            
-            updateSliderPosition();
+        // Touch события
+        slider.addEventListener('touchstart', touchStart, {passive: false});
+        slider.addEventListener('touchmove', touchMove, {passive: false});
+        slider.addEventListener('touchend', touchEnd);
+        
+        // Click события для кнопок
+        nextBtn.addEventListener('click', goNext);
+        prevBtn.addEventListener('click', goPrev);
+        
+        function touchStart(e) {
+            e.preventDefault();
+            startPos = e.touches[0].clientX;
+            currentPos = startPos;
+            isDragging = true;
+            track.style.transition = 'none';
         }
         
         function touchMove(e) {
-            if (isDragging) {
-                const currentPosition = e.touches[0].clientX;
-                currentTranslate = prevTranslate + currentPosition - startPosX;
-                track.style.transform = `translateX(${currentTranslate}px)`;
+            if (!isDragging) return;
+            e.preventDefault();
+            const current = e.touches[0].clientX;
+            const diff = current - currentPos;
+            currentPos = current;
+            track.style.transform = `translateX(calc(-${currentIndex * slideWidth}px + ${diff}px))`;
+        }
+        
+        function touchEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            track.style.transition = 'transform 0.3s ease';
+            
+            const diff = currentPos - startPos;
+            if (diff < -50) {
+                goNext();
+            } else if (diff > 50) {
+                goPrev();
+            } else {
+                updateSliderPosition();
             }
         }
         
-        // Инициализация
         updateSliderPosition();
     }
     
-    // Инициализация всех слайдеров
+    // Инициализация слайдеров
     const sliders = document.querySelectorAll('.slider');
     sliders.forEach(slider => {
         initSlider(slider);
     });
-});
 
+});
 // Остальной код (календарь, форма бронирования) остается без изменений
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -210,27 +224,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Обработка формы
     const bookingForm = document.getElementById('bookingForm');
+
     if (bookingForm) {
-        bookingForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const formData = getFormData();
-            
-            if (!validateForm(formData)) return;
-            
-            setLoadingState(true);
-            
-            try {
-                await sendFormData(formData);
-                showAlert('success', '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
-                bookingForm.reset();
-            } catch (error) {
-                console.error('Ошибка отправки:', error);
-                handleSendError(error);
-            } finally {
-                setLoadingState(false);
-            }
-        });
-    }
+        // Обработка touch для инпутов
+        const inputs = bookingForm.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('touchstart', function(e) {
+                this.focus();
+                e.stopPropagation();
+            }, {passive: true});
+        })
+    
+        if (bookingForm) {
+            bookingForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const formData = getFormData();
+                
+                if (!validateForm(formData)) return;
+                
+                setLoadingState(true);
+                
+                try {
+                    await sendFormData(formData);
+                    showAlert('success', '✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.');
+                    bookingForm.reset();
+                } catch (error) {
+                    console.error('Ошибка отправки:', error);
+                    handleSendError(error);
+                } finally {
+                    setLoadingState(false);
+                }
+            });
+        }
+    
+    };
 
     // Функции
     function initDatePickers() {
