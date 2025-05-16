@@ -4,12 +4,7 @@
     --mobile-padding: 15px;
     --tablet-padding: 25px;
   }
-  
-  /* * {
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
 
-  } */
 
   /* Для формы */
 input, select, textarea, button {
@@ -23,7 +18,7 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
 }
   /* Для модальных окон */
-.modal {
+  .modal {
     touch-action: pan-y;
     position: fixed;
     top: 0;
@@ -32,6 +27,7 @@ input:focus, select:focus, textarea:focus {
     height: 100%;
     z-index: 1000;
 }
+
 .slider-track {
     user-select: none;
 }
@@ -793,7 +789,7 @@ h2 {
     }
 
     .menu {
-
+        display: none;
         position: fixed;
         top: 0;
         left: -100%;
@@ -803,9 +799,11 @@ h2 {
         transition: 0.4s;
         padding-top: 80px;
         border-radius: 50px;
+        z-index: 1000;
     }
     .menu.active {
         left: 0;
+        display: block;
     }
       
       .menu ul {
