@@ -1,0 +1,620 @@
+/* Общий фон для body */
+body {
+    font-family: "Kanit", sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background: #fff url('image/fon body.png') fixed;
+    min-height: 100vh;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.body-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+
+/* Header */
+.header {
+    width: 100%;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-container {
+    background: linear-gradient(90deg, rgba(184, 184, 242, 1) 0%, rgba(40, 48, 156, 1) 0%, rgba(92, 92, 128, 1) 0%, rgba(168, 178, 224, 1) 0%, rgba(28, 52, 122, 1) 100%);
+    border-radius: 50px;
+    color: #fff;
+    padding: 15px 25px;
+    box-shadow: 0 5px 9px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 100px;
+    width: auto;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.logo img:active {
+    transform: scale(0.95);
+}
+
+/* Меню */
+.menu ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+.menu a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 18px;
+    transition: color 0.3s;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.menu a:hover {
+    color: #ff6f61;
+}
+
+/* Бургер-меню */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 5px;
+}
+
+/* Основной контент */
+.container, .service-container {
+    background: linear-gradient(90deg, rgba(184, 184, 242, 1) 0%, rgba(40, 48, 156, 1) 0%, rgba(92, 92, 128, 1) 0%, rgba(168, 178, 224, 1) 0%, rgba(28, 52, 122, 1) 100%);
+    border-radius: 50px;
+    padding: 25px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+
+.content-container {
+    background: url('image/фон.jpg') no-repeat;
+    background-size: cover;
+    background-position: center ;
+    min-height: 800px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+
+/* Для других основных блоков тоже явно указываем ширину 90% */
+.banner-content {
+    padding: 30px;
+    max-width: 700px;
+    width: 90%;
+    margin: 20px;
+}
+
+.banner h1 {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.banner p, .about-text p {
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #cc3a2c;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Услуги */
+.service-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    padding: 20px 0;
+}
+
+.service-item {
+    background: linear-gradient(90deg, rgba(184, 184, 242, 1) 0%, rgba(40, 48, 156, 1) 0%, rgba(92, 92, 128, 1) 0%, rgba(138, 94, 94, 1) 0%, rgba(71, 29, 29, 1) 50%, rgba(48, 2, 2, 1) 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: pointer;
+    color: #fff;
+}
+
+.service-item:active {
+    transform: scale(0.98);
+}
+
+.service-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.service-item:hover img {
+    transform: scale(1.05);
+}
+
+.service-item h3 {
+    font-size: 1.3rem;
+    padding: 15px 15px 0;
+}
+
+.service-item p {
+    padding: 0 15px 15px;
+    font-size: 0.95rem;
+}
+
+/* Модальные окна */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden; /* Запрещаем скролл */
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    width: 95%;
+    max-width: 600px; /* Уменьшили максимальную ширину */
+    background: transparent;
+    border-radius: 10px;
+    position: relative;
+    max-height: 90vh; /* Ограничиваем высоту */
+    display: flex;
+    flex-direction: column;
+    background: rgb(95, 79, 79);
+    border-radius: 50px;
+
+}
+.close {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    font-size: 38px;
+    font-weight: bold;
+    color: rgb(37, 37, 37);
+    cursor: pointer;
+    transition: color 0.3s;
+    background: none;
+    border: none;
+    padding: 5px;
+    z-index: 100;
+}
+
+.close:hover {
+    color: #cc3a2c;
+}
+
+/* Слайдер */
+.slider {
+    position: relative;
+    width: 100%;
+    max-width: 800px; /* Регулируйте по необходимости */
+    height: 80vh; /* Фиксированная высота */
+    max-height: 600px; /* Максимальная высота */
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 50px;
+    background: rgba(0,0,0,0.1); /* Фон на случай маленьких изображений */
+}
+
+
+
+
+
+
+
+
+.slider-track {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%;
+
+}
+
+.slide {
+    min-width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    border-radius: 50px;
+}
+
+.modal-body {
+    padding: 15px 0;
+    color: white;
+    text-align: center;
+    overflow-y: auto; /* Скролл только для текста */
+    max-height: 40vh; /* Ограничение высоты текста */
+    flex-grow: 1;
+}
+
+.slider-controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.slider-controls button {
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+    backdrop-filter: blur(5px);
+}
+
+.slider-controls button:hover {
+    background: rgba(0,0,0,0.8);
+}
+
+/* Контакты */
+.contacts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px; /* Отступ между колонками */
+    margin-top: 30px;
+}
+
+.contacts-info {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Отступ между карточками */
+}
+
+.contact-card {
+    background: rgba(255,255,255,0.9);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.contact-card h3 {
+    color: #1c347a;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.contact-item .icon {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.contact-item a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+.contact-item a:hover {
+    color: #1c347a;
+}
+
+.map-container {
+    height: 300px;
+    width: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    transition: transform 0.3s;
+}
+
+.fab {
+    margin-right: 3px;
+}
+
+.social-link .icon img {
+    width: 24px;
+    height: 24px;
+}
+
+.social-link.whatsapp {
+    background: #25D366;
+}
+
+.social-link.telegram {
+    background: #0088cc;
+}
+
+.social-link.instagram {
+    background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+}
+
+
+
+
+/* Форма бронирования */
+.booking-form {
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.booking-form h3 {
+    color: #1c347a;
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #1c347a;
+    outline: none;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+
+
+/* Футер */
+.footer {
+    color: #fff;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.footer p {
+    margin-bottom: 10px;
+}
+
+.footer-social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.footer-social-links a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Адаптация */
+@media (max-width: 1199px) {
+    .hamburger {
+        display: block;
+    }
+    
+    .menu {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        height: 100vh;
+        background: #1c347a;
+        flex-direction: column;
+        padding-top: 100px;
+        z-index: 1000;
+    }
+    
+    .menu.active {
+        left: 0;
+    }
+    
+    .menu ul {
+        flex-direction: column;
+        gap: 20px;
+        padding: 0 30px;
+    }
+    
+    .menu a {
+        font-size: 1.2rem;
+        padding: 10px;
+        display: block;
+    }
+}
+
+@media (max-width: 767px) {
+    .header-container {
+        border-radius: 50px;
+        padding: 10px 15px;
+    }
+    
+    .content-container {
+        border-radius: 50px;
+        min-height: 400px;
+    }
+    
+    .banner-content {
+        padding: 20px;
+    }
+    
+    .banner h1 {
+        font-size: 1.8rem;
+    }
+    
+    .banner p {
+        font-size: 1rem;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .modal-content {
+        padding: 20px;
+        width: 65%;
+    }
+
+    
+    .slider {
+        height: 60vh;
+        max-height: 600px;
+    }
+    
+    .slide img {
+        max-height: 38vh; /* Чуть меньше родителя */
+        width: auto;
+        margin: 0 auto;
+    }
+
+
+    .contacts-grid {
+        grid-template-columns: 1fr; /* Одна колонка */
+        gap: 30px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .contact-card,
+    .booking-form {
+        padding: 20px;
+    }
+}
+
+@media (min-width: 768px) {
+    .contacts-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 992px) {
+    .service-items {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
