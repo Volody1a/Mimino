@@ -150,7 +150,6 @@ document.addEventListener('DOMContentLoaded', function() {
         let startPosX = 0;
         let currentTranslate = 0;
         let prevTranslate = 0;
-        let animationID = null;
         
         // Установка размеров слайдов
         const setSlideWidth = () => {
@@ -163,19 +162,24 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Навигация
         const goNext = () => {
-            if (currentIndex < slides.length - 1) currentIndex++;
-            else currentIndex = 0;
-            updateSliderPosition();
+            if (currentIndex < slides.length - 1) {
+                currentIndex++;
+                updateSliderPosition();
+            }
         };
         
         const goPrev = () => {
-            if (currentIndex > 0) currentIndex--;
-            else currentIndex = slides.length - 1;
-            updateSliderPosition();
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSliderPosition();
+            }
         };
         
         const updateSliderPosition = () => {
+            track.style.transition = 'transform 0.3s ease-out';
             track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+            prevTranslate = currentIndex * slideWidth;
+            currentTranslate = prevTranslate;
         };
         
         // Инициализация
@@ -198,9 +202,6 @@ document.addEventListener('DOMContentLoaded', function() {
             startPosX = e.touches[0].clientX;
             isDragging = true;
             track.style.transition = 'none';
-            
-            // Отменяем анимацию
-            cancelAnimationFrame(animationID);
         }
         
         function touchMove(e) {
@@ -208,30 +209,23 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const currentX = e.touches[0].clientX;
             currentTranslate = prevTranslate + currentX - startPosX;
-            
-            // Ограничиваем перемещение
-            const maxTranslate = (slides.length - 1) * slideWidth;
-            currentTranslate = Math.max(Math.min(currentTranslate, maxTranslate), 0);
-            
-            track.style.transform = `translateX(${-currentIndex * slideWidth + (currentX - startPosX)}px)`;
+            track.style.transform = `translateX(${currentTranslate}px)`;
         }
         
         function touchEnd() {
             if (!isDragging) return;
             isDragging = false;
-            track.style.transition = 'transform 0.3s ease-out';
             
             const movedBy = currentTranslate - prevTranslate;
+            const threshold = slideWidth / 4; // 25% ширины слайда
             
-            // Определяем направление свайпа
-            if (movedBy < -50 && currentIndex < slides.length - 1) {
+            if (movedBy < -threshold && currentIndex < slides.length - 1) {
                 currentIndex++;
-            } else if (movedBy > 50 && currentIndex > 0) {
+            } else if (movedBy > threshold && currentIndex > 0) {
                 currentIndex--;
             }
             
             updateSliderPosition();
-            prevTranslate = currentIndex * slideWidth;
         }
     }
 
