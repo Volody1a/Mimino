@@ -202,26 +202,28 @@ document.addEventListener('DOMContentLoaded', function() {
             startPosX = e.touches[0].clientX;
             isDragging = true;
             track.style.transition = 'none';
+            prevTranslate = currentIndex * slideWidth;
+            currentTranslate = prevTranslate;
         }
         
         function touchMove(e) {
             if (!isDragging) return;
             e.preventDefault();
             const currentX = e.touches[0].clientX;
-            currentTranslate = prevTranslate + currentX - startPosX;
-            track.style.transform = `translateX(${currentTranslate}px)`;
+            currentTranslate = prevTranslate - (startPosX - currentX);
+            track.style.transform = `translateX(-${currentTranslate}px)`;
         }
         
         function touchEnd() {
             if (!isDragging) return;
             isDragging = false;
             
-            const movedBy = currentTranslate - prevTranslate;
-            const threshold = slideWidth / 4; // 25% ширины слайда
+            const movedBy = prevTranslate - currentTranslate;
+            const threshold = slideWidth / 5; // 20% ширины слайда
             
-            if (movedBy < -threshold && currentIndex < slides.length - 1) {
+            if (movedBy > threshold && currentIndex < slides.length - 1) {
                 currentIndex++;
-            } else if (movedBy > threshold && currentIndex > 0) {
+            } else if (movedBy < -threshold && currentIndex > 0) {
                 currentIndex--;
             }
             

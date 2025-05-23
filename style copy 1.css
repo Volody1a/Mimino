@@ -285,6 +285,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease-out;
 }
 
 .slide img {
