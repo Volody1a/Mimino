@@ -114,9 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let slideWidth = slider.offsetWidth;
         let isDragging = false;
         let startPosX = 0;
-        let currentTranslate = 0;
-        let prevTranslate = 0;
-        let animationID = null;
+        let dragDelta = 0;
         
         // Установка размеров слайдов
         const setSlideWidth = () => {
@@ -162,25 +160,21 @@ document.addEventListener('DOMContentLoaded', function() {
         function touchStart(e) {
             e.preventDefault();
             startPosX = e.touches[0].clientX;
+            dragDelta = 0;
             isDragging = true;
             track.style.transition = 'none';
-            
-            // Отменяем анимацию
-            cancelAnimationFrame(animationID);
         }
         
         function touchMove(e) {
             if (!isDragging) return;
             e.preventDefault();
             const currentX = e.touches[0].clientX;
-            const deltaX = currentX - startPosX;
-            
-            // Плавное перемещение с ограничениями
+            dragDelta = startPosX - currentX; // свайп влево => положительное значение
+            const translate = currentIndex * slideWidth + dragDelta;
+            // ограничиваем перемещение внутри трека
             const maxTranslate = (slides.length - 1) * slideWidth;
-            const minTranslate = 0;
-            currentTranslate = Math.max(Math.min(prevTranslate + deltaX, maxTranslate), minTranslate);
-            
-            track.style.transform = `translateX(${-currentTranslate}px)`;
+            const clamped = Math.max(0, Math.min(translate, maxTranslate));
+            track.style.transform = `translateX(-${clamped}px)`;
         }
         
         function touchEnd(e) {
@@ -188,19 +182,16 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             isDragging = false;
             track.style.transition = 'transform 0.3s ease-out';
-            
-            const deltaX = currentTranslate - prevTranslate;
-            const threshold = slideWidth * 0.3; // 30% от ширины слайда
-            
-            // Определяем направление свайпа с улучшенной логикой
-            if (deltaX < -threshold && currentIndex < slides.length - 1) {
-                currentIndex++;
-            } else if (deltaX > threshold && currentIndex > 0) {
-                currentIndex--;
+            const threshold = slideWidth * 0.15; // 15% от ширины слайда
+            if (Math.abs(dragDelta) > threshold) {
+                if (dragDelta > 0 && currentIndex < slides.length - 1) {
+                    currentIndex++;
+                } else if (dragDelta < 0 && currentIndex > 0) {
+                    currentIndex--;
+                }
             }
-            
+            dragDelta = 0;
             updateSliderPosition();
-            prevTranslate = currentIndex * slideWidth;
         }
     }
 
@@ -506,6 +497,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Очищаем существующие опции (кроме первой)
             houseSelect.innerHTML = '<option value="">Выберите вариант</option>';
             
+            let added = 0;
             // Добавляем домики из Google Sheets
             houses.forEach(house => {
                 if (house.status === 'Активен') {
@@ -513,8 +505,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     option.value = house.id;
                     option.textContent = `${house.name} (${house.type}, до ${house.maxGuests} чел)`;
                     houseSelect.appendChild(option);
+                    added++;
                 }
             });
+            
+            // Если из таблицы ничего не пришло — показываем запасной список
+            if (!added) {
+                houseSelect.innerHTML = fallbackOptions;
+            }
             
             console.log('Домики загружены из Google Sheets:', houses);
         } catch (error) {
