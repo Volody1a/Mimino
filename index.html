@@ -14,6 +14,8 @@
     <!-- Flatpickr JS + Russian locale -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
+    <!-- Google Sheets API -->
+    <script src="google-sheets-config.js" defer></script>
     <script src="index.js" defer></script> <!-- Убрал лишний путь /mimino/ -->
 </head>
 <body>
@@ -256,9 +258,7 @@
                                 <label for="house">Домик:</label>
                                 <select id="house" required>
                                     <option value="">Выберите вариант</option>
-                                    <option value="house1">Домик на 2 человек</option>
-                                    <option value="house2">Домик на 4 человек</option>
-                                    <option value="house3">VIP-домик</option>
+                                    <!-- Опции будут загружены динамически из Google Sheets -->
                                 </select>
                             </div>
                             

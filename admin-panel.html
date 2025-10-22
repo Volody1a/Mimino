@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель - База отдыха Мимино</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(90deg, #1c347a 0%, #667eea 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1c347a;
+        }
+        
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .bookings-section {
+            padding: 20px;
+        }
+        
+        .bookings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .bookings-header h2 {
+            color: #1c347a;
+        }
+        
+        .refresh-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .refresh-btn:hover {
+            background: #218838;
+        }
+        
+        .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .bookings-table th {
+            background: #1c347a;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .bookings-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .bookings-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status.confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 5px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .btn-confirm {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-cancel {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn:hover {
+            opacity: 0.8;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .bookings-table {
+                font-size: 12px;
+            }
+            
+            .bookings-table th,
+            .bookings-table td {
+                padding: 8px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏠 Админ-панель базы отдыха "Мимино"</h1>
+            <p>Управление бронированиями и домиками</p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalBookings">-</div>
+                <div class="stat-label">Всего бронирований</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="pendingBookings">-</div>
+                <div class="stat-label">Ожидают подтверждения</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="confirmedBookings">-</div>
+                <div class="stat-label">Подтверждено</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="activeHouses">-</div>
+                <div class="stat-label">Активных домиков</div>
+            </div>
+        </div>
+        
+        <div class="bookings-section">
+            <div class="bookings-header">
+                <h2>📋 Список бронирований</h2>
+                <button class="refresh-btn" onclick="loadBookings()">🔄 Обновить</button>
+            </div>
+            
+            <div id="bookingsContainer">
+                <div class="loading">Загрузка бронирований...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подключаем Google Sheets API и систему уведомлений -->
+    <script src="google-sheets-config.js"></script>
+    <script src="notification-system.js"></script>
+    <script>
+        // Функция загрузки бронирований
+        async function loadBookings() {
+            const container = document.getElementById('bookingsContainer');
+            container.innerHTML = '<div class="loading">Загрузка бронирований...</div>';
+            
+            try {
+                if (!window.GoogleSheetsAPI) {
+                    throw new Error('Google Sheets API не загружен');
+                }
+                
+                const [bookings, houses] = await Promise.all([
+                    window.GoogleSheetsAPI.getBookings(),
+                    window.GoogleSheetsAPI.getHouses()
+                ]);
+                
+                // Создаем карту домиков для быстрого поиска
+                const housesMap = {};
+                houses.forEach(house => {
+                    housesMap[house.id] = house;
+                });
+                
+                // Обновляем статистику
+                updateStats(bookings, houses);
+                
+                // Отображаем таблицу бронирований
+                displayBookings(bookings, housesMap);
+                
+            } catch (error) {
+                console.error('Ошибка загрузки бронирований:', error);
+                container.innerHTML = `
+                    <div class="error">
+                        ❌ Ошибка загрузки данных: ${error.message}
+                        <br><br>
+                        Проверьте:
+                        <ul>
+                            <li>Подключение к интернету</li>
+                            <li>Настройки Google Sheets API</li>
+                            <li>Права доступа к таблице</li>
+                        </ul>
+                    </div>
+                `;
+            }
+        }
+        
+        // Обновление статистики
+        function updateStats(bookings, houses) {
+            const totalBookings = bookings.length;
+            const pendingBookings = bookings.filter(b => b.status === 'Ожидает').length;
+            const confirmedBookings = bookings.filter(b => b.status === 'Подтверждено').length;
+            const activeHouses = houses.filter(h => h.status === 'Активен').length;
+            
+            document.getElementById('totalBookings').textContent = totalBookings;
+            document.getElementById('pendingBookings').textContent = pendingBookings;
+            document.getElementById('confirmedBookings').textContent = confirmedBookings;
+            document.getElementById('activeHouses').textContent = activeHouses;
+        }
+        
+        // Отображение таблицы бронирований
+        function displayBookings(bookings, housesMap) {
+            const container = document.getElementById('bookingsContainer');
+            
+            if (bookings.length === 0) {
+                container.innerHTML = '<div class="loading">Бронирований пока нет</div>';
+                return;
+            }
+            
+            // Сортируем по дате создания (новые сверху)
+            bookings.sort((a, b) => new Date(b.checkin) - new Date(a.checkin));
+            
+            const tableHTML = `
+                <table class="bookings-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Домик</th>
+                            <th>Даты</th>
+                            <th>Гость</th>
+                            <th>Телефон</th>
+                            <th>Статус</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${bookings.map(booking => {
+                            const house = housesMap[booking.houseId];
+                            const houseName = house ? house.name : `Домик ${booking.houseId}`;
+                            
+                            return `
+                                <tr>
+                                    <td>${booking.id}</td>
+                                    <td>${houseName}</td>
+                                    <td>${formatDate(booking.checkin)} - ${formatDate(booking.checkout)}</td>
+                                    <td>${booking.guestName}</td>
+                                    <td><a href="tel:${booking.guestPhone}">${booking.guestPhone}</a></td>
+                                    <td><span class="status ${getStatusClass(booking.status)}">${booking.status}</span></td>
+                                    <td class="action-buttons">
+                                        ${booking.status === 'Ожидает' ? `
+                                            <button class="btn btn-confirm" onclick="updateBookingStatus('${booking.id}', 'Подтверждено')">
+                                                ✅ Подтвердить
+                                            </button>
+                                            <button class="btn btn-cancel" onclick="updateBookingStatus('${booking.id}', 'Отменено')">
+                                                ❌ Отменить
+                                            </button>
+                                        ` : ''}
+                                        ${booking.status === 'Подтверждено' ? `
+                                            <button class="btn btn-cancel" onclick="updateBookingStatus('${booking.id}', 'Отменено')">
+                                                ❌ Отменить
+                                            </button>
+                                        ` : ''}
+                                    </td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>
+                </table>
+            `;
+            
+            container.innerHTML = tableHTML;
+        }
+        
+        // Форматирование даты
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU');
+        }
+        
+        // Получение CSS класса для статуса
+        function getStatusClass(status) {
+            switch(status) {
+                case 'Ожидает': return 'pending';
+                case 'Подтверждено': return 'confirmed';
+                case 'Отменено': return 'cancelled';
+                default: return 'pending';
+            }
+        }
+        
+        // Обновление статуса бронирования
+        async function updateBookingStatus(bookingId, newStatus) {
+            try {
+                if (!window.GoogleSheetsAPI) {
+                    throw new Error('Google Sheets API не загружен');
+                }
+                
+                // Обновляем статус в Google Sheets
+                await window.GoogleSheetsAPI.updateBookingStatus(bookingId, newStatus);
+                
+                // Отправляем уведомление клиенту
+                const bookings = await window.GoogleSheetsAPI.getBookings();
+                const booking = bookings.find(b => b.id === bookingId);
+                if (booking && window.sendBookingNotification) {
+                    await window.sendBookingNotification(booking, newStatus);
+                }
+                
+                // Показываем уведомление
+                const statusText = {
+                    'Подтверждено': '✅ Подтверждено',
+                    'Отменено': '❌ Отменено'
+                }[newStatus] || newStatus;
+                
+                alert(`Статус бронирования #${bookingId} изменен на "${statusText}"\n\nУведомление отправлено клиенту.`);
+                
+                // Перезагружаем данные
+                loadBookings();
+                
+            } catch (error) {
+                console.error('Ошибка обновления статуса:', error);
+                alert(`Ошибка при обновлении статуса: ${error.message}`);
+            }
+        }
+        
+        // Загружаем данные при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBookings();
+        });
+    </script>
+</body>
+</html>
