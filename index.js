@@ -8,16 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
         html.style.touchAction = 'manipulation';
         html.style.webkitTextSizeAdjust = '100%';
         html.style.webkitTapHighlightColor = 'transparent';
-        
-        // Предотвращение масштабирования при двойном тапе
-        document.addEventListener('dblclick', function(e) {
-            e.preventDefault();
-        }, { passive: false });
-        
-        // Предотвращение контекстного меню на долгий тап
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        }, { passive: false });
     }
 
     // ========== Бургер-меню ==========
@@ -87,58 +77,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Обработчики для карточек услуг
     serviceItems.forEach(item => {
-        let touchStartTime = 0;
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let touchMoved = false;
-
-        // Улучшенная обработка тач-событий
-        item.addEventListener('touchstart', (e) => {
-            touchStartTime = Date.now();
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-            touchMoved = false;
-        }, { passive: true });
-
-        item.addEventListener('touchmove', (e) => {
-            if (!touchMoved) {
-                const currentX = e.touches[0].clientX;
-                const currentY = e.touches[0].clientY;
-                const deltaX = Math.abs(currentX - touchStartX);
-                const deltaY = Math.abs(currentY - touchStartY);
-                
-                // Если движение больше 10px, считаем это свайпом
-                if (deltaX > 10 || deltaY > 10) {
-                    touchMoved = true;
-                }
-            }
-        }, { passive: true });
-
-        item.addEventListener('touchend', (e) => {
-            const touchEndX = e.changedTouches[0].clientX;
-            const touchEndY = e.changedTouches[0].clientY;
-            const timeDiff = Date.now() - touchStartTime;
-            
-            // Проверяем, был ли это тап (а не свайп)
-            const isTap = (
-                !touchMoved &&
-                Math.abs(touchEndX - touchStartX) < 15 && 
-                Math.abs(touchEndY - touchStartY) < 15 &&
-                timeDiff < 500
-            );
-
-            if (isTap) {
-                e.preventDefault();
-                const modalId = item.getAttribute('data-modal');
-                openModal(modalId);
-            }
-        }, { passive: false });
-
-        // Для десктопов
+        // Простая обработка кликов
         item.addEventListener('click', function(e) {
-            if (e.target.closest('a') || e.target.closest('button')) return;
-            if (isTouchDevice) return; // Для тач-устройств используем только touchend
-            
+            e.preventDefault();
             const modalId = this.getAttribute('data-modal');
             openModal(modalId);
         });
@@ -211,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (nextBtn) nextBtn.addEventListener('click', goNext);
         if (prevBtn) prevBtn.addEventListener('click', goPrev);
         
-        // Улучшенные Touch-события для мобильных
+        // Touch-события для мобильных
         if (isTouchDevice) {
             slider.addEventListener('touchstart', touchStart, { passive: false });
             slider.addEventListener('touchmove', touchMove, { passive: false });
@@ -291,22 +232,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
         
-        // Разные настройки для мобильных и десктопов
-        const mobileOptions = {
+        // Упрощенные настройки
+        const options = {
             ...baseOptions,
-            disableMobile: false, // Включаем мобильную версию
-            mobileNative: true,   // Используем нативный пикер
-            static: true          // Статичное позиционирование
+            disableMobile: false,
+            static: true
         };
-        
-        const desktopOptions = {
-            ...baseOptions,
-            disableMobile: true,
-            static: false,
-            position: 'auto'
-        };
-        
-        const options = isTouchDevice ? mobileOptions : desktopOptions;
         
         // Функция для загрузки занятых дат
         const loadBookedDates = async (houseId) => {
@@ -372,15 +303,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Дополнительная обработка для мобильных устройств
+        // Обработка для мобильных устройств
         if (isTouchDevice) {
             [checkinInput, checkoutInput].forEach(input => {
                 input.addEventListener('focus', function() {
-                    // Предотвращаем скролл страницы при фокусе
+                    // Плавный скролл к полю
                     setTimeout(() => {
-                        this.blur();
-                        this.click();
-                    }, 50);
+                        this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
                 });
             });
         }
@@ -394,11 +324,8 @@ document.addEventListener('DOMContentLoaded', function() {
             bookingForm.querySelectorAll('input, select').forEach(input => {
                 input.addEventListener('focus', function() {
                     setTimeout(() => {
-                        window.scrollTo({
-                            top: this.getBoundingClientRect().top + window.pageYOffset - 100,
-                            behavior: 'smooth'
-                        });
-                    }, 300);
+                        this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
                 });
             });
         }
@@ -422,6 +349,21 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!formData.phone || !/^[\d\+\(\)\s-]{7,}$/.test(formData.phone)) errors.push('Укажите корректный телефон');
             if (!formData.checkin || !formData.checkout) errors.push('Выберите даты заезда и выезда');
             if (!formData.house) errors.push('Выберите тип домика');
+            
+            // Проверка дат
+            if (formData.checkin && formData.checkout) {
+                const checkinDate = new Date(formData.checkin);
+                const checkoutDate = new Date(formData.checkout);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                if (checkinDate < today) {
+                    errors.push('Дата заезда не может быть в прошлом');
+                }
+                if (checkoutDate <= checkinDate) {
+                    errors.push('Дата выезда должна быть позже даты заезда');
+                }
+            }
             
             if (errors.length > 0) {
                 showAlert('error', errors.join('<br>'));
@@ -458,9 +400,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Сохраняем в Google Sheets (если API доступен)
                 if (window.GoogleSheetsAPI) {
                     try {
-                        await saveBookingToGoogleSheets(formData);
+                        await window.GoogleSheetsAPI.saveBookingToGoogleSheets(formData);
                     } catch (sheetsError) {
                         console.warn('Ошибка сохранения в Google Sheets:', sheetsError);
+                        // Не показываем ошибку пользователю, так как основная отправка в Telegram прошла успешно
                     }
                 }
                 
@@ -539,7 +482,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // ========== Загрузка домиков из Google Sheets ==========
     const loadHousesFromGoogleSheets = async () => {
         const houseSelect = document.getElementById('house');
-        if (!houseSelect || !window.GoogleSheetsAPI) return;
+        if (!houseSelect) return;
+        
+        // Fallback - статичные опции по умолчанию
+        const fallbackOptions = `
+            <option value="">Выберите вариант</option>
+            <option value="1">Домик 1 (Стандарт, до 2 чел)</option>
+            <option value="2">Домик 2 (Стандарт, до 2 чел)</option>
+            <option value="3">Домик 3 (Стандарт, до 2 чел)</option>
+            <option value="4">Домик 4 (Комфорт, до 4 чел)</option>
+            <option value="5">Домик 5 (Комфорт, до 4 чел)</option>
+            <option value="6">VIP Домик (VIP, до 6 чел)</option>
+        `;
+        
+        if (!window.GoogleSheetsAPI) {
+            houseSelect.innerHTML = fallbackOptions;
+            return;
+        }
         
         try {
             const houses = await window.GoogleSheetsAPI.getHouses();
@@ -560,17 +519,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Домики загружены из Google Sheets:', houses);
         } catch (error) {
             console.error('Ошибка загрузки домиков:', error);
-            
-            // Fallback - статичные опции если Google Sheets недоступен
-            houseSelect.innerHTML = `
-                <option value="">Выберите вариант</option>
-                <option value="1">Домик 1 (Стандарт, до 2 чел)</option>
-                <option value="2">Домик 2 (Стандарт, до 2 чел)</option>
-                <option value="3">Домик 3 (Стандарт, до 2 чел)</option>
-                <option value="4">Домик 4 (Комфорт, до 4 чел)</option>
-                <option value="5">Домик 5 (Комфорт, до 4 чел)</option>
-                <option value="6">VIP Домик (VIP, до 6 чел)</option>
-            `;
+            houseSelect.innerHTML = fallbackOptions;
         }
     };
 
