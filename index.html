@@ -30,11 +30,11 @@
             <button class="hamburger">&#9776;</button>
             <nav class="menu">
                 <ul>
-                    <li><a href="index.html">Главная</a></li> <!-- Убрал "copy" из ссылки -->
-                    <li><a href="#about-h2">О нас</a></li>
-                    <li><a href="#services-h2">Услуги</a></li>
-                    <li><a href="#services">Галерея</a></li>
-                    <li><a href="#contacts-h2">Контакты</a></li>
+                    <li><a href="#top">Главная</a></li>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#houses">Домики</a></li>
+                    <li><a href="#services">Услуги</a></li>
+                    <li><a href="#contacts">Контакты</a></li>
                 </ul>
             </nav>
         </div>
@@ -49,7 +49,48 @@
                     <p>Мы создали идеальные условия для вашего отдыха. На нашей базе вы найдёте всё необходимое: просторные домики с удобствами, 
                         традиционную русскую баню с берёзовыми вениками, освежающие купели и места для барбекю. 
                         Расположение в окружении горных пейзажей делает нашу базу идеальным выбором для тех, кто ценит природу и комфорт.</p>
-                    <a href="#contacts" class="btn">Забронировать</a>
+                    <a href="#booking" class="btn">Забронировать</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Houses -->
+        <section id="houses" class="houses">
+            <div class="service-container">
+                <h2>Наши домики</h2>
+                <div class="houses-grid">
+                    <div class="house-card">
+                        <img src="image/фото1.jpg" alt="Домик 1" loading="lazy" decoding="async">
+                        <div class="house-info">
+                            <h3>Домик 1 — Стандарт</h3>
+                            <p>До 2 гостей • Уютный номер с видом на горы</p>
+                            <button class="btn house-details" data-title="Домик 1 — Стандарт" data-desc="Уютный домик для двух гостей: кровать, отопление, душ, мангал рядом." data-images="image/фото1.jpg,image/домики.jpg">Подробнее</button>
+                        </div>
+                    </div>
+                    <div class="house-card">
+                        <img src="image/фото3.jpg" alt="Домик 2" loading="lazy" decoding="async">
+                        <div class="house-info">
+                            <h3>Домик 2 — Стандарт</h3>
+                            <p>До 2 гостей • Комфорт и тишина</p>
+                            <button class="btn house-details" data-title="Домик 2 — Стандарт" data-desc="Идеален для пары. Все удобства, чистый воздух, рядом тропы." data-images="image/фото3.jpg,image/домики.jpg">Подробнее</button>
+                        </div>
+                    </div>
+                    <div class="house-card">
+                        <img src="image/фото4.jpg" alt="Домик 3" loading="lazy" decoding="async">
+                        <div class="house-info">
+                            <h3>Домик 3 — Комфорт</h3>
+                            <p>До 4 гостей • Простор для семьи</p>
+                            <button class="btn house-details" data-title="Домик 3 — Комфорт" data-desc="Две спальни, зона отдыха, отличный выбор для семьи." data-images="image/фото4.jpg,image/домики.jpg">Подробнее</button>
+                        </div>
+                    </div>
+                    <div class="house-card">
+                        <img src="image/фото5.jpg" alt="Домик VIP" loading="lazy" decoding="async">
+                        <div class="house-info">
+                            <h3>VIP домик</h3>
+                            <p>До 6 гостей • Максимальный комфорт</p>
+                            <button class="btn house-details" data-title="VIP домик" data-desc="Просторный домик: большая гостиная, отдельные спальни, зона BBQ." data-images="image/фото5.jpg,image/домики.jpg">Подробнее</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -228,7 +269,7 @@
                     </div>
                     
                     <!-- Форма бронирования -->
-                    <div class="booking-form">
+                    <div class="booking-form" id="booking">
                         <div id="formAlerts"></div>
                         <h3>Забронировать домик</h3>
                         <form id="bookingForm">

@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ========== Модальные окна ==========
     const serviceItems = document.querySelectorAll('.service-item');
+    const houseDetailButtons = document.querySelectorAll('.house-details');
     const modals = document.querySelectorAll('.modal');
     const closeButtons = document.querySelectorAll('.close');
 
@@ -82,6 +83,31 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const modalId = this.getAttribute('data-modal');
             openModal(modalId);
+        });
+    });
+
+    // Обработчики для карточек домиков — показываем модалку 3 с динамическими данными
+    houseDetailButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const title = btn.getAttribute('data-title') || 'Домик';
+            const desc = btn.getAttribute('data-desc') || '';
+            const images = (btn.getAttribute('data-images') || '').split(',').filter(Boolean);
+
+            const modal = document.getElementById('modal3');
+            if (!modal) return;
+
+            // Заголовок и описание
+            const body = modal.querySelector('.modal-body');
+            if (body) body.textContent = desc;
+
+            // Картинки
+            const track = modal.querySelector('.slider-track');
+            if (track && images.length) {
+                track.innerHTML = images.map(src => `<img src="${src}" class="slide" alt="${title}">`).join('');
+            }
+
+            openModal('modal3');
         });
     });
 
